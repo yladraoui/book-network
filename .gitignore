@@ -1,0 +1,47 @@
+# =========================================================================
+# 1. Build and Dependency Managers (Maven)
+# =========================================================================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.mars
+*.vm
+*.gz
+
+# =========================================================================
+# 2. IDE Specific Files (IntelliJ, Eclipse, VS Code)
+# =========================================================================
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.metadata/
+.classpath
+.project
+.settings/
+*.launch
+
+# Visual Studio Code
+.vscode/
+
+# =========================================================================
+# 3. Operating System Specific Files
+# =========================================================================
+顶层/.DS_Store
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Log.txt
+
+# =========================================================================
+# 4. Local Environment & Security (Important pour la suite !)
+# =========================================================================
+.env
+.env.local
+*.jks
+*.p12
+*.key
