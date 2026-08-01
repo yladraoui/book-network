@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableAsync
 public class BookNetworkApplication {
 
