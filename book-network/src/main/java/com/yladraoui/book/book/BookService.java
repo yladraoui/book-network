@@ -30,14 +30,14 @@ public class BookService {
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
     private final BookMapper bookMapper;
 
-    public @Nullable Integer save(BookRequest request, Authentication connectedUser) {
+    public @Nullable Long save(BookRequest request, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
         Book book = bookMapper.toBook(request);
         book.setOwner(user);
         return bookRepository.save(book).getId();
     }
 
-    public BookResponse findById(Integer bookId) {
+    public BookResponse findById(Long bookId) {
         return bookRepository.findById(bookId)
                 .map(bookMapper::toBookResponse)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
@@ -64,7 +64,7 @@ public class BookService {
     public @Nullable PageResponse<BookResponse> findAllBooksByOwner(int page, int size, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
-        Page<Book> books = bookRepository.findAll(BookSpecification.withOwnerId((int) user.getId()), pageable);
+        Page<Book> books = bookRepository.findAll(BookSpecification.withOwnerId(user.getId()), pageable);
         List<BookResponse> bookResponse = books.stream()
                 .map(bookMapper::toBookResponse)
                 .toList();
@@ -115,7 +115,7 @@ public class BookService {
         );
     }
 
-    public @Nullable Integer updateShareableStatus(Integer bookId, Authentication connectedUser) {
+    public @Nullable Long updateShareableStatus(Long bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
         User user = (User) connectedUser.getPrincipal();
@@ -127,7 +127,7 @@ public class BookService {
         return bookId;
     }
 
-    public @Nullable Integer updateArchivedStatus(Integer bookId, Authentication connectedUser) {
+    public @Nullable Long updateArchivedStatus(Long bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
         User user = (User) connectedUser.getPrincipal();
@@ -139,7 +139,7 @@ public class BookService {
         return bookId;
     }
 
-    public @Nullable Integer borrowBook(Integer bookId, Authentication connectedUser) {
+    public @Nullable Long borrowBook(Long bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
         if (book.isArchive() || !book.isShareable()){
@@ -164,7 +164,7 @@ public class BookService {
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
     }
 
-    public @Nullable Integer returnBorrowedBook(Integer bookId, Authentication connectedUser) {
+    public @Nullable Long returnBorrowedBook(Long bookId, Authentication connectedUser) {
 
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
@@ -186,7 +186,7 @@ public class BookService {
         return bookTransactionHistoryRepository.save(bookTransactionHistory.get()).getId();
     }
 
-    public @Nullable Integer approveReturnBorrowedBook(Integer bookId, Authentication connectedUser) {
+    public @Nullable Long approveReturnBorrowedBook(Long bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
 
@@ -208,7 +208,7 @@ public class BookService {
         return bookTransactionHistoryRepository.save(bookTransactionHistory.get()).getId();
     }
 
-    public void uploadCoverPicture(MultipartFile file, Authentication connectedUser, Integer bookId) {
+    public void uploadCoverPicture(MultipartFile file, Authentication connectedUser, Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
         User user = (User) connectedUser.getPrincipal();

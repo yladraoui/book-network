@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 
-public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecificationExecutor<Book> {
+public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
 
     @Query("""
             SELECT book
-            FROM Book book
+            FROM Book books
             WHERE book.shareable = false
             AND book.archived = false
             AND book.owner.id != :userId
             """)
-    Page<Book> findAllDisplayableBooks(Pageable pageable, long userId);
+    Page<Book> findAllDisplayableBooks(Pageable pageable, Long userId);
 }

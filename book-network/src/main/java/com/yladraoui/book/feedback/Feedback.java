@@ -22,7 +22,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Feedback extends BaseEntity {
+public class
+Feedback extends BaseEntity {
 
     private Double score;
     private String comment;

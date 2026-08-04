@@ -4,6 +4,7 @@ import com.yladraoui.book.book.Book;
 import com.yladraoui.book.history.BookTransactionHistory;
 import com.yladraoui.book.role.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String firstname;
     private String lastname;
     private LocalDate dateOfBirth;

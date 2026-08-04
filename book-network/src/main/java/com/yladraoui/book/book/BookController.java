@@ -18,7 +18,7 @@ public class BookController {
     private final BookService service;
 
     @PostMapping
-    public ResponseEntity<Integer> saveBook(
+    public ResponseEntity<Long> saveBook(
             @Valid @RequestBody BookRequest request,
             Authentication connectedUser
     ){
@@ -27,7 +27,7 @@ public class BookController {
 
     @GetMapping("{book-id}")
     public ResponseEntity<BookResponse> findBookById(
-            @PathVariable("book-id") Integer bookId
+            @PathVariable("book-id") Long bookId
     ){
         return ResponseEntity.ok(service.findById(bookId));
     }
@@ -69,40 +69,40 @@ public class BookController {
     }
 
     @PatchMapping("/shareable/{book-id}")
-    public ResponseEntity<Integer> updateShareableStatus(
-            @PathVariable("book-id") Integer bookId,
+    public ResponseEntity<Long> updateShareableStatus(
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser
     ){
         return ResponseEntity.ok(service.updateShareableStatus(bookId, connectedUser));
     }
 
     @PatchMapping("/archived/{book-id}")
-    public ResponseEntity<Integer> updateArchivedStatus(
-            @PathVariable("book-id") Integer bookId,
+    public ResponseEntity<Long> updateArchivedStatus(
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser
     ){
         return ResponseEntity.ok(service.updateArchivedStatus(bookId, connectedUser));
     }
 
     @PostMapping("/borrow/{book-id}")
-    public ResponseEntity<Integer> borrowBook(
-            @PathVariable("book-id") Integer bookId,
+    public ResponseEntity<Long> borrowBook(
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser
     ){
         return  ResponseEntity.ok(service.borrowBook(bookId, connectedUser));
     }
 
     @PostMapping("/borrow/return/{book-id}")
-    public ResponseEntity<Integer> returnBorrowedBook(
-            @PathVariable("book-id") Integer bookId,
+    public ResponseEntity<Long> returnBorrowedBook(
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser
     ){
         return  ResponseEntity.ok(service.returnBorrowedBook(bookId, connectedUser));
     }
 
     @PostMapping("/borrow/return/approve/{book-id}")
-    public ResponseEntity<Integer> approveReturnBorrowedBook(
-            @PathVariable("book-id") Integer bookId,
+    public ResponseEntity<Long> approveReturnBorrowedBook(
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser
     ){
         return  ResponseEntity.ok(service.approveReturnBorrowedBook(bookId, connectedUser));
@@ -110,7 +110,7 @@ public class BookController {
 
     @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
     public ResponseEntity<?> uploadBookCoverPicture(
-            @PathVariable("book-id") Integer bookId,
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser,
             @Parameter()
             @RequestPart("file")MultipartFile file
