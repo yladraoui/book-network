@@ -3,7 +3,9 @@ package com.yladraoui.book.book;
 
 import com.yladraoui.book.file.FileUtils;
 import com.yladraoui.book.history.BookTransactionHistory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookMapper {
     public Book toBook(BookRequest request) {
         return Book.builder()

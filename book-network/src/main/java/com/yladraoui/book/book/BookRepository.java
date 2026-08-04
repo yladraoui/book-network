@@ -12,9 +12,9 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
 
     @Query("""
             SELECT book
-            FROM Book books
+            FROM Book book
             WHERE book.shareable = false
-            AND book.archived = false
+            AND book.archive = false
             AND book.owner.id != :userId
             """)
     Page<Book> findAllDisplayableBooks(Pageable pageable, Long userId);
