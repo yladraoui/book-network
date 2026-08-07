@@ -2,6 +2,7 @@ package com.yladraoui.book.auth;
 
 import com.yladraoui.book.email.EmailService;
 import com.yladraoui.book.email.EmailTemplateName;
+import com.yladraoui.book.exception.InvalidActivationTokenException;
 import com.yladraoui.book.role.RoleRepository;
 import com.yladraoui.book.security.JwtService;
 import com.yladraoui.book.user.Token;
@@ -76,7 +77,7 @@ public class AuthenticationService {
         var token = Token.builder()
                 .token(generatedToken)
                 .createdAt(LocalDateTime.now())
-                .expiredAt(LocalDateTime.now().plusMinutes(15))
+                .expiredAt(LocalDateTime.now().plusSeconds(50))
                 .user(user)
                 .build();
         tokenRepository.save(token);
@@ -115,10 +116,10 @@ public class AuthenticationService {
     public void activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByToken(token)
                 //Exception has to be defined
-                .orElseThrow(()-> new RuntimeException("Invalid token"));
+                .orElseThrow(()-> new InvalidActivationTokenException("Invalid token"));
         if(LocalDateTime.now().isAfter(savedToken.getExpiredAt())){
             sendValidationEmail(savedToken.getUser());
-            throw new RuntimeException("Activation token has expired. A new Token has been sent to the same email address");
+            throw new InvalidActivationTokenException("Activation token has expired. A new Token has been sent to the same email address");
         }
 
         User user = userRepository.findByEmail(savedToken.getUser().getEmail())

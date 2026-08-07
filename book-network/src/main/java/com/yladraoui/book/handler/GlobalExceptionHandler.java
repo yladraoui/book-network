@@ -1,5 +1,6 @@
 package com.yladraoui.book.handler;
 
+import com.yladraoui.book.exception.InvalidActivationTokenException;
 import com.yladraoui.book.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,19 @@ public class GlobalExceptionHandler {
                                 .build()
                 );
     }
+
+    @ExceptionHandler(InvalidActivationTokenException.class)
+    public ResponseEntity<ExceptionResponse> handleException(InvalidActivationTokenException exp){
+        return ResponseEntity
+                .status(UNAUTHORIZED)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+
     @ExceptionHandler(MessagingException.class)
     public ResponseEntity<ExceptionResponse> handleException(MessagingException exp){
         return ResponseEntity
@@ -109,6 +123,7 @@ public class GlobalExceptionHandler {
                                 .build()
                 );
     }
+
 
 
 }

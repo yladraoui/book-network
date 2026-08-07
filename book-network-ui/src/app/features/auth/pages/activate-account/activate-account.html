@@ -1,0 +1,29 @@
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="card p-4 shadow-sm text-center" style="max-width: 400px; width: 100%;">
+    <h3 class="mb-3">Account activation</h3>
+    <p class="text-muted">Please enter the 6-digit code sent by email.</p>
+
+    <div *ngIf="isSubmitted" class="alert" [ngClass]="isOkay ? 'alert-success' : 'alert-danger'" role="alert">
+      {{ message }}
+    </div>
+
+    <form *ngIf="!isOkay || !isSubmitted" (ngSubmit)="onConfirm()">
+      <div class="mb-3">
+        <input 
+          type="text" 
+          class="form-control text-center fs-4 tracking-widest" 
+          maxlength="6" 
+          [(ngModel)]="token" 
+          name="token" 
+          placeholder="123456" 
+          required
+        >
+      </div>
+      <button type="submit" class="btn btn-primary w-100 mb-2">Validate the code</button>
+    </form>
+
+    <button *ngIf="isSubmitted && isOkay" (click)="goToLogin()" class="btn btn-success w-100">
+      Go to login
+    </button>
+  </div>
+</div>
