@@ -1,1 +1,5 @@
-<router-outlet />
+<app-menu *ngIf="!isAuthPage"></app-menu>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
