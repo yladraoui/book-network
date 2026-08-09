@@ -8,11 +8,10 @@ import { Component, Input } from '@angular/core';
   styleUrl: './rating.scss',
 })
 export class Rating {
-  @Input() rating = 0;
-  private maxRating = 5;
+@Input() rating: number = 0;
 
   get fullStars(): number[] {
-    return new Array(Math.floor(this.rating)).fill(0);
+    return Array(Math.floor(this.rating)).fill(0);
   }
 
   get hasHalfStar(): boolean {
@@ -20,6 +19,7 @@ export class Rating {
   }
 
   get emptyStars(): number[] {
-    return new Array(this.maxRating - Math.ceil(this.rating)).fill(0);
+    const filled = this.fullStars.length + (this.hasHalfStar ? 1 : 0);
+    return Array(Math.max(0, 5 - filled)).fill(0);
   }
 }

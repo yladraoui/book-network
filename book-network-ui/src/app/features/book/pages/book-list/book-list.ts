@@ -35,10 +35,11 @@ export class BookList {
       next: (res) => {
         console.log(">>>> res :", res);
         this.bookResponse = res.body || {};
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Erreur chargement livres', err)
+      error: (err) => console.error('Error while uploading books', err)
     });
-    this.cdr.detectChanges();
+    
   }
 
   borrowBook(book: BookResponse): void {
