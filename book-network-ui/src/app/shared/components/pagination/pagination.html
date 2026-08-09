@@ -1,0 +1,49 @@
+<nav *ngIf="totalPages > 1" class="flex items-center justify-center space-x-1 my-6" aria-label="Pagination">
+  <!-- Premiere page -->
+  <button
+    (click)="goToFirst()"
+    [disabled]="isFirst"
+    class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+    title="Première page">
+    <i class="fas fa-angle-double-left"></i>
+  </button>
+
+  <!-- Page precedente -->
+  <button
+    (click)="goToPrevious()"
+    [disabled]="isFirst"
+    class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+    <i class="fas fa-angle-left"></i>
+  </button>
+
+  <!-- Numeros de page -->
+  <button
+    *ngFor="let p of pages"
+    (click)="goToPage(p)"
+    [class.bg-indigo-600]="p === page"
+    [class.text-white]="p === page"
+    [class.border-indigo-600]="p === page"
+    [class.bg-white]="p !== page"
+    [class.text-gray-700]="p !== page"
+    [class.hover:bg-gray-50]="p !== page"
+    class="px-3 py-2 rounded-md text-sm font-medium border border-gray-300 transition-colors">
+    {{ p + 1 }}
+  </button>
+
+  <!-- Page suivante -->
+  <button
+    (click)="goToNext()"
+    [disabled]="isLast"
+    class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+    <i class="fas fa-angle-right"></i>
+  </button>
+
+  <!-- Derniere page -->
+  <button
+    (click)="goToLast()"
+    [disabled]="isLast"
+    class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+    title="Dernière page">
+    <i class="fas fa-angle-double-right"></i>
+  </button>
+</nav>

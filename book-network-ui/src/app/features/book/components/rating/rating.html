@@ -1,0 +1,12 @@
+<div class="rating-container flex items-center gap-1 text-amber-500">
+      @for (star of fullStars; track $index) {
+        <i class="fas font-star fa-star"></i>
+      }
+      @if (hasHalfStar) {
+        <i class="fas fa-star-half-alt"></i>
+      }
+      @for (star of emptyStars; track $index) {
+        <i class="far fa-star"></i>
+      }
+      <span class="text-sm font-semibold text-gray-600 ml-1">{{ rating | number:'1.1-1' }}</span>
+</div>
