@@ -17,12 +17,15 @@
 
   <div class="card-body d-flex flex-column">
     
-    <!-- Titre et Auteur -->
+    
     <h5 class="card-title text-truncate fw-bold mb-1" [title]="book.title">
       {{ book.title }}
     </h5>
     <p class="card-text text-muted small mb-1">
-      Par {{ book.authorName }} | <span class="font-monospace">{{ book.isbn }}</span>
+      Par {{ book.authorName }}
+    </p>
+    <p class="card-text text-muted small mb-1">
+      ISBN: {{ book.isbn }}
     </p>
     <p class="card-text text-muted small mb-2">
       Propriétaire: {{ book.owner }}
@@ -34,7 +37,7 @@
 
   
     <p class="card-text text-secondary small mb-3 synopsis-text">
-      {{ book.synopsis }}
+      {{ book.synopsis | slice:0:30 }}...
     </p>
 
     

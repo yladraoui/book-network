@@ -62,5 +62,6 @@ export class BookList {
   onPageChange(newPage: number): void {
     this.page = newPage;
     this.loadBooks();
+    this.cdr.detectChanges();
   }
 }

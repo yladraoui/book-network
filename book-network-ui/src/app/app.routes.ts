@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { FeedbackCard } from './features/feedback/components/feedback-card/feedback-card';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -9,6 +10,10 @@ export const routes: Routes = [
     {
     path: 'books',
     loadChildren: () => import('./features/book/book.routes').then(m => m.BOOK_ROUTES)
+    },
+    {
+        path: 'feedback-test',
+        component: FeedbackCard
     },
     { path: '**', redirectTo: 'login' }
 ];

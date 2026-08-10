@@ -1,0 +1,15 @@
+<div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+
+  <div class="card-body d-flex flex-column">
+
+        <div class="mb-2">
+        <app-rating [rating]="feedback.score || 0"></app-rating>
+        </div>
+
+    
+        <p class="card-text text-secondary small mb-3 synopsis-text">
+            {{feedback.comment}}
+        </p>
+
+  </div>
+</div>
