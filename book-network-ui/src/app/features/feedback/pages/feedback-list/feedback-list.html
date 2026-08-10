@@ -1,0 +1,29 @@
+<div class="container py-4">
+  <h1 class="h3 font-weight-bold text-dark mb-4">Book feedbacks</h1>
+
+  <div class="row g-4 mb-4">
+    <ng-container *ngIf="feedbackResponse.content && feedbackResponse.content.length > 0; else emptyBlock">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let feedback of feedbackResponse.content">
+        <app-feedback-card
+          [feedback]="feedback">
+        </app-feedback-card>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyBlock>
+      <div class="col-12 text-center py-5 text-muted">
+        No feedback available at the moment.
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <app-pagination
+      [page]="page"
+      [totalPages]="feedbackResponse.totalPages || 0"
+      [isFirst]="feedbackResponse.first ?? true"
+      [isLast]="feedbackResponse.last ?? true"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
+  </div>
+</div>

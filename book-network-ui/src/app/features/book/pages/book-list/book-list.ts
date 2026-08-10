@@ -22,7 +22,7 @@ export class BookList {
 
   bookResponse: PageResponseBookResponse = {};
   page = 0;
-  size = 8;
+  size = 9;
   message = '';
   level: 'success' | 'danger' = 'success';
 

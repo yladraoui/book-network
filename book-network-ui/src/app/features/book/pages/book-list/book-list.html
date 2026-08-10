@@ -1,26 +1,26 @@
 <div class="container py-4">
   <h1 class="h3 font-weight-bold text-dark mb-4">Book catalog</h1>
 
-  @if (message) {
-    <div [class]="'alert alert-' + level + ' alert-dismissible fade show mb-4'" role="alert">
-      <span>{{ message }}</span>
-      <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
-    </div>
-  }
+  <div *ngIf="message" [class]="'alert alert-' + level + ' alert-dismissible fade show mb-4'" role="alert">
+    <span>{{ message }}</span>
+    <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
+  </div>
 
   <div class="row g-4 mb-4">
-    @for (book of bookResponse.content; track book.id || $index) {
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <ng-container *ngIf="bookResponse.content && bookResponse.content.length > 0; else emptyBlock">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let book of bookResponse.content">
         <app-book-card
           [book]="book"
           (borrow)="borrowBook($event)">
         </app-book-card>
       </div>
-    } @empty {
+    </ng-container>
+
+    <ng-template #emptyBlock>
       <div class="col-12 text-center py-5 text-muted">
         No books available at the moment.
       </div>
-    }
+    </ng-template>
   </div>
 
   <div class="d-flex justify-content-center">

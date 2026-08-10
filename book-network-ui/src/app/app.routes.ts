@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { FeedbackCard } from './features/feedback/components/feedback-card/feedback-card';
+import { FeedbackList } from './features/feedback/pages/feedback-list/feedback-list';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,6 +15,10 @@ export const routes: Routes = [
     {
         path: 'feedback-test',
         component: FeedbackCard
+    },
+    {
+        path: 'feedback-list-test',
+        component: FeedbackList
     },
     { path: '**', redirectTo: 'login' }
 ];
