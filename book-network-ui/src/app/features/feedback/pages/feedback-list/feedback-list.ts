@@ -11,7 +11,7 @@ import { Rating } from '../../../book/components/rating/rating';
 
 @Component({
   selector: 'app-feedback-list',
-  imports: [CommonModule, FormsModule, FeedbackCard, Pagination, Rating],
+  imports: [CommonModule, FormsModule, FeedbackCard, Pagination],
   templateUrl: './feedback-list.html',
   styleUrl: './feedback-list.scss',
 })

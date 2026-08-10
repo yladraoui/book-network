@@ -1,14 +1,14 @@
 <div class="rating-container flex items-center gap-1 text-amber-500">
-  <!-- Étoiles complètes -->
+  <!-- Full stars -->
   <i *ngFor="let star of fullStars" class="fas fa-star"></i>
 
-  <!-- Demi-étoile -->
+  <!-- Half-star -->
   <i *ngIf="hasHalfStar" class="fas fa-star-half-alt"></i>
 
-  <!-- Étoiles vides -->
+  <!-- Empty star -->
   <i *ngFor="let star of emptyStars" class="far fa-star"></i>
 
-  <!-- Note numérique -->
+  <!-- Digital note -->
   <span class="text-sm font-semibold text-gray-600 ml-1">
     {{ rating | number:'1.1-1' }}
   </span>

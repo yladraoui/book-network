@@ -3,13 +3,13 @@
   <div class="position-relative bg-light text-center" style="height: 200px;">
     <img [src]="coverImage" [alt]="book.title" class="w-100 h-100 object-fit-cover" />
     
-    <!-- Badges superposés -->
+    <!-- Overlapping badges -->
     <div class="position-absolute top-0 end-0 p-2 d-flex gap-1">
       <span *ngIf="book.shareable" class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
-        Partageable
+        Shareable
       </span>
       <span *ngIf="book.archived" class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill">
-        Archivé
+        Archived
       </span>
     </div>
   </div>

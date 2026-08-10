@@ -6,17 +6,17 @@
   </button>
 </div>
 
-<!-- Message d'alerte -->
+<!-- Alert Message -->
 <div *ngIf="message" [class]="'alert alert-' + level + ' alert-dismissible fade show mb-3'" role="alert">
   <span>{{ message }}</span>
   <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
 </div>
 
-<!-- FORMULAIRE D'AJOUT D'AVIS -->
+<!-- REVIEW SUBMISSION FORM -->
 <div *ngIf="showForm" class="card card-body bg-light border-0 shadow-sm mb-4">
   <h6 class="fw-bold mb-2">Leave a review</h6>
 
-  <!-- Sélection de la note (Étoiles interactives) -->
+  <!-- Rating selection -->
   <div class="mb-3">
     <label class="form-label small text-muted mb-1">Your rating</label>
     <div class="d-flex gap-1 text-warning fs-5 cursor-pointer">
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <!-- Zone de texte pour le commentaire -->
+  <!-- Text zone for comment -->
   <div class="mb-3">
     <label for="comment" class="form-label small text-muted mb-1">Comment</label>
     <textarea
@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<!-- LISTE DES AVIS -->
+<!-- Reviews List -->
 <div class="row g-3 mb-3">
   <ng-container *ngIf="feedbackResponse.content && feedbackResponse.content.length > 0; else emptyBlock">
     <div class="col-12" *ngFor="let feedback of feedbackResponse.content">
