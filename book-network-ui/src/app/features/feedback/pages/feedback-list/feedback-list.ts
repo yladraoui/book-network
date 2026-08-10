@@ -49,6 +49,8 @@ export class FeedbackList {
     totalPages: 1
   }
 
+  isManageMode: boolean = false;
+
   page = 0;
   size = 9;
  

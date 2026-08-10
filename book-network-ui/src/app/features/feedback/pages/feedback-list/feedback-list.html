@@ -3,16 +3,27 @@
 
   <div class="row g-4 mb-4">
     <ng-container *ngIf="feedbackResponse.content && feedbackResponse.content.length > 0; else emptyBlock">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let feedback of feedbackResponse.content">
-        <app-feedback-card
-          [feedback]="feedback">
-        </app-feedback-card>
-      </div>
+        <button class="btn btn-outline-primary btn-sm">Add feedback</button>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12" *ngFor="let feedback of feedbackResponse.content">
+            <app-feedback-card
+            [feedback]="feedback">
+            </app-feedback-card>
+        </div>
     </ng-container>
+
+    <ng-container *ngIf="isManageMode">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let feedback of feedbackResponse.content">
+            <label for=""></label>
+            <input type="number" name="score" id="">
+        </div>
+    </ng-container>
+
+    
 
     <ng-template #emptyBlock>
       <div class="col-12 text-center py-5 text-muted">
         No feedback available at the moment.
+        <button class="btn btn-outline-primary btn-sm">Add feedback</button>
       </div>
     </ng-template>
   </div>

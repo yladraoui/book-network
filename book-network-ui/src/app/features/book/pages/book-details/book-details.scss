@@ -1,0 +1,30 @@
+/* 1. Bloque le conteneur principal à la hauteur exacte de l'écran visible */
+.layout-container {
+  height: calc(100vh - 80px); /* Ajustez 80px selon la hauteur de votre navbar */
+  overflow: hidden;           /* Empêche le conteneur global de scroller */
+}
+
+/* 2. Assure que la ligne et les colonnes prennent toute la hauteur sans déborder */
+.row-fixed {
+  height: 100%;
+}
+
+.col-fixed {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. Rend la carte fixe et active le scroll uniquement dans card-body */
+.card-scrollable {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Empêche la carte elle-même de déborder */
+
+  .card-body {
+    flex: 1;
+    overflow-y: auto; /* Active le scroll indépendant UNIQUEMENT ici */
+    scrollbar-width: thin;
+  }
+}
