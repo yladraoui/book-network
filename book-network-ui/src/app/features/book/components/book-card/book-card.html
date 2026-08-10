@@ -1,5 +1,4 @@
-<div class="card shadow-sm border-0 rounded-3 overflow-hidden">
-
+<div class="card shadow-sm border-0 rounded-3 overflow-hidden cursor-pointer" (click)="onDetails()">
 
   <div class="position-relative bg-light text-center" style="height: 200px;">
     <img [src]="coverImage" [alt]="book.title" class="w-100 h-100 object-fit-cover" />
@@ -16,8 +15,6 @@
   </div>
 
   <div class="card-body d-flex flex-column">
-    
-    
     <h5 class="card-title text-truncate fw-bold mb-1" [title]="book.title">
       {{ book.title }}
     </h5>
@@ -35,29 +32,28 @@
       <app-rating [rating]="book.rate || 0"></app-rating>
     </div>
 
-  
     <p class="card-text text-secondary small mb-3 synopsis-text">
       {{ book.synopsis | slice:0:30 }}...
     </p>
 
-    
     <div class="pt-2 border-top d-flex align-items-center justify-content-between gap-2 mt-auto">
       
       <ng-container *ngIf="!isManageMode">
-        <button (click)="onBorrow()" [disabled]="book.archived || !book.shareable"
+        <!-- $event.stopPropagation() évite d'ouvrir la page de détails quand on clique sur Emprunter -->
+        <button (click)="$event.stopPropagation(); onBorrow()" [disabled]="book.archived || !book.shareable"
           class="btn btn-primary w-100 btn-sm font-weight-medium">
           Emprunter
         </button>
       </ng-container>
 
       <ng-container *ngIf="isManageMode">
-        <button (click)="onEdit()" class="btn btn-sm btn-outline-primary border-0" title="Modifier">
+        <button (click)="$event.stopPropagation(); onEdit()" class="btn btn-sm btn-outline-primary border-0" title="Modifier">
           <i class="fas fa-edit"></i>
         </button>
-        <button (click)="onShareable()" class="btn btn-sm btn-outline-success border-0" title="Changer statut partagé">
+        <button (click)="$event.stopPropagation(); onShareable()" class="btn btn-sm btn-outline-success border-0" title="Changer statut partagé">
           <i class="fas fa-share-alt"></i>
         </button>
-        <button (click)="onArchive()" class="btn btn-sm btn-outline-warning border-0" title="Archiver">
+        <button (click)="$event.stopPropagation(); onArchive()" class="btn btn-sm btn-outline-warning border-0" title="Archiver">
           <i class="fas fa-archive"></i>
         </button>
       </ng-container>

@@ -59,6 +59,12 @@ export class BookList {
     });
   }
 
+  displayBookDetails(book: BookResponse): void {
+  if (book.id) {
+    this.router.navigate(['books', 'details', book.id]); // Ajustez la route selon vos déclinaisons dans app.routes.ts
+  }
+}
+
   onPageChange(newPage: number): void {
     this.page = newPage;
     this.loadBooks();
