@@ -1,40 +1,74 @@
-<div class="container py-4">
-  <h1 class="h3 font-weight-bold text-dark mb-4">Book feedbacks</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="h5 fw-bold text-dark mb-0">Reviews</h2>
+  <button class="btn btn-sm btn-outline-primary" (click)="toggleForm()">
+    <i class="fas" [ngClass]="showForm ? 'fa-minus' : 'fa-plus'"></i>
+    {{ showForm ? 'Cancel' : 'Add feedback' }}
+  </button>
+</div>
 
-  <div class="row g-4 mb-4">
-    <ng-container *ngIf="feedbackResponse.content && feedbackResponse.content.length > 0; else emptyBlock">
-        <button class="btn btn-outline-primary btn-sm">Add feedback</button>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12" *ngFor="let feedback of feedbackResponse.content">
-            <app-feedback-card
-            [feedback]="feedback">
-            </app-feedback-card>
-        </div>
-    </ng-container>
+<!-- Message d'alerte -->
+<div *ngIf="message" [class]="'alert alert-' + level + ' alert-dismissible fade show mb-3'" role="alert">
+  <span>{{ message }}</span>
+  <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
+</div>
 
-    <ng-container *ngIf="isManageMode">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let feedback of feedbackResponse.content">
-            <label for=""></label>
-            <input type="number" name="score" id="">
-        </div>
-    </ng-container>
+<!-- FORMULAIRE D'AJOUT D'AVIS -->
+<div *ngIf="showForm" class="card card-body bg-light border-0 shadow-sm mb-4">
+  <h6 class="fw-bold mb-2">Leave a review</h6>
 
-    
-
-    <ng-template #emptyBlock>
-      <div class="col-12 text-center py-5 text-muted">
-        No feedback available at the moment.
-        <button class="btn btn-outline-primary btn-sm">Add feedback</button>
-      </div>
-    </ng-template>
+  <!-- Sélection de la note (Étoiles interactives) -->
+  <div class="mb-3">
+    <label class="form-label small text-muted mb-1">Your rating</label>
+    <div class="d-flex gap-1 text-warning fs-5 cursor-pointer">
+      <i *ngFor="let star of [1, 2, 3, 4, 5]"
+         class="fa-star"
+         [ngClass]="star <= (feedbackRequest.score || 0) ? 'fas' : 'far'"
+         (click)="setNote(star)"
+         style="cursor: pointer;">
+      </i>
+    </div>
   </div>
 
-  <div class="d-flex justify-content-center">
-    <app-pagination
-      [page]="page"
-      [totalPages]="feedbackResponse.totalPages || 0"
-      [isFirst]="feedbackResponse.first ?? true"
-      [isLast]="feedbackResponse.last ?? true"
-      (pageChange)="onPageChange($event)">
-    </app-pagination>
+  <!-- Zone de texte pour le commentaire -->
+  <div class="mb-3">
+    <label for="comment" class="form-label small text-muted mb-1">Comment</label>
+    <textarea
+      id="comment"
+      class="form-control"
+      rows="3"
+      placeholder="Write your thoughts about this book..."
+      [(ngModel)]="feedbackRequest.comment">
+    </textarea>
   </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <button type="button" class="btn btn-sm btn-light" (click)="toggleForm()">Cancel</button>
+    <button type="button" class="btn btn-sm btn-primary" (click)="onSubmitFeedback()">Submit</button>
+  </div>
+</div>
+
+<!-- LISTE DES AVIS -->
+<div class="row g-3 mb-3">
+  <ng-container *ngIf="feedbackResponse.content && feedbackResponse.content.length > 0; else emptyBlock">
+    <div class="col-12" *ngFor="let feedback of feedbackResponse.content">
+      <app-feedback-card [feedback]="feedback"></app-feedback-card>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyBlock>
+    <div class="col-12 text-center py-4 text-muted small">
+      No feedback available yet. Be the first to leave a review!
+    </div>
+  </ng-template>
+</div>
+
+<!-- PAGINATION -->
+<div class="d-flex justify-content-center" *ngIf="(feedbackResponse.totalPages || 0) > 1">
+  <app-pagination
+    [page]="page"
+    [totalPages]="feedbackResponse.totalPages || 0"
+    [isFirst]="feedbackResponse.first ?? true"
+    [isLast]="feedbackResponse.last ?? true"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
 </div>
