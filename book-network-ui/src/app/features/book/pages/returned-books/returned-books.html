@@ -1,0 +1,76 @@
+<div class="container py-4">
+  <h1 class="h3 font-weight-bold text-dark mb-4">Returned Books Approval</h1>
+
+  <!-- Alert Message -->
+  <div *ngIf="message" [class]="'alert alert-' + level + ' alert-dismissible fade show mb-4'" role="alert">
+    <span>{{ message }}</span>
+    <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
+  </div>
+
+  <!-- Returned Books Table -->
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-0">
+      <div class="table-responsive" *ngIf="returnedBooksResponse.content && returnedBooksResponse.content.length > 0; else emptyBlock">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="ps-4">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-end pe-4">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of returnedBooksResponse.content">
+              <td class="ps-4 fw-semibold text-dark">{{ book.title || 'N/A' }}</td>
+              <td class="text-secondary">{{ book.authorName || 'Unknown Author' }}</td>
+              <td>
+                <app-rating [rating]="book.rate || 0"></app-rating>
+              </td>
+              <td>
+                <!-- Status Badges -->
+                <span *ngIf="book.returnApproved" class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
+                  <i class="fas fa-check-circle me-1"></i> Return Approved
+                </span>
+                <span *ngIf="!book.returnApproved" class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill">
+                  <i class="fas fa-clock me-1"></i> Pending Approval
+                </span>
+              </td>
+              <td class="text-end pe-4">
+                <button
+                  *ngIf="!book.returnApproved"
+                  (click)="approveBookReturn(book)"
+                  class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-check me-1"></i> Approve Return
+                </button>
+                <span *ngIf="book.returnApproved" class="text-muted small fst-italic">
+                  Approved
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <ng-template #emptyBlock>
+        <div class="text-center py-5 text-muted">
+          <i class="fas fa-inbox fs-1 mb-3 d-block text-secondary"></i>
+          <p class="mb-0">No returned books pending approval.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center" *ngIf="(returnedBooksResponse.totalPages || 0) > 1">
+    <app-pagination
+      [page]="page"
+      [totalPages]="returnedBooksResponse.totalPages || 0"
+      [isFirst]="returnedBooksResponse.first ?? true"
+      [isLast]="returnedBooksResponse.last ?? true"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
+  </div>
+</div>

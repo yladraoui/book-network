@@ -15,6 +15,6 @@ private tokenService = inject(TokenService);
 
   logout(): void {
     localStorage.removeItem('token');
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/login']);
   }
 }

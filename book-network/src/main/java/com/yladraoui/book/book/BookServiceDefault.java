@@ -195,8 +195,8 @@ public class BookServiceDefault implements BookService{
         }
 
         User user = (User) connectedUser.getPrincipal();
-        if (Objects.equals(book.getOwner().getId(), user.getId())){
-            throw new OperationNotPermittedException("You cannot borrow or return your own books");
+        if (!Objects.equals(book.getOwner().getId(), user.getId())){
+            throw new OperationNotPermittedException("You are not the book owner, so you can not approve it's return. ");
         }
 
         Optional<BookTransactionHistory> bookTransactionHistory = bookTransactionHistoryRepository.findByBookIdAndOwnerId(bookId, user.getId());
