@@ -14,6 +14,6 @@ export class App {
   private router = inject(Router);
 
   get isAuthPage(): boolean {
-    return (this.router.url.includes('/login') || this.router.url.includes('/registe') );
+    return (this.router.url.includes('/login') || this.router.url.includes('/registe') || this.router.url.includes('/welcome') );
   }
 }

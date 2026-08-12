@@ -2,9 +2,13 @@ import { Routes } from '@angular/router';
 import { FeedbackCard } from './features/feedback/components/feedback-card/feedback-card';
 import { FeedbackList } from './features/feedback/pages/feedback-list/feedback-list';
 import { BookDetails } from './features/book/pages/book-details/book-details';
+import { Landing } from './shared/components/landing/landing';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    {
+        path: 'welcome',
+        component: Landing
+    },
     {
         path: '',
         loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
@@ -25,5 +29,6 @@ export const routes: Routes = [
         path: 'book-details-test',
         component: BookDetails
     },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'welcome' },
+     { path: '', redirectTo: 'welcome', pathMatch: 'full' }
 ];

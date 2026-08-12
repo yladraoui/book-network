@@ -1,13 +1,13 @@
 <div class="container py-4">
-  <!-- Entête avec titre et bouton d'ajout -->
+
   <div class="d-flex justify-content-between items-center mb-4">
-    <h1 class="h3 font-weight-bold text-dark mb-0">Mes Livres</h1>
+    <h1 class="h3 font-weight-bold text-dark mb-0">My Books</h1>
     <a routerLink="/books/manage" class="btn btn-primary">
-      <i class="fas fa-plus me-2"></i>Nouveau livre
+      <i class="fas fa-plus me-2"></i>New book
     </a>
   </div>
 
-  <!-- Grille des cartes de livres (3 par ligne grâce à col-md-4) -->
+
   <div class="row g-4 mb-4 align-items-start h-auto" *ngIf="bookResponse?.content?.length; else emptyState">
     <div class="col-12 col-sm-6 col-md-4" *ngFor="let book of bookResponse.content">
       <app-book-card
@@ -20,15 +20,15 @@
     </div>
   </div>
 
-  <!-- Cas où la liste est vide -->
+
   <ng-template #emptyState>
     <div class="row mb-4">
       <div class="col-12 text-center py-5">
         <div class="p-4 border rounded bg-light">
           <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
-          <p class="text-muted mb-3">Vous n'avez encore ajouté aucun livre.</p>
+          <p class="text-muted mb-3">You have not added yet any book.</p>
           <a routerLink="/books/manage" class="btn btn-outline-primary btn-sm">
-            Ajouter votre premier livre
+            Add your first book?
           </a>
         </div>
       </div>

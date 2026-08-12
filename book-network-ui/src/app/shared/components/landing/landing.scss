@@ -1,0 +1,16 @@
+.landing-page {
+  .hover-zoom {
+    transition: transform 0.3s ease-in-out;
+    object-fit: cover;
+    height: 220px;
+    width: 100%;
+
+    &:hover {
+      transform: scale(1.04);
+    }
+  }
+
+  .fw-extrabold {
+    font-weight: 800;
+  }
+}

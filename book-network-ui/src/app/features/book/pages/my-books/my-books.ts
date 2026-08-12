@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { BookCard } from '../../components/book-card/book-card';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { Router, RouterLink } from '@angular/router';
@@ -14,7 +14,7 @@ import { findAllBooksByOwner, updateArchivedStatus, updateShareableStatus } from
   templateUrl: './my-books.html',
   styleUrl: './my-books.scss',
 })
-export class MyBooks {
+export class MyBooks implements OnInit{
   private http = inject(HttpClient);
   private router = inject(Router);
   private config = inject(ApiConfiguration);
