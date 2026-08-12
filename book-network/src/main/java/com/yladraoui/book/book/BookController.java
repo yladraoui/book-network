@@ -135,4 +135,13 @@ public class BookController {
         return ResponseEntity.ok(service.approveBorrowRequest(historyId, connectedUser));
     }
 
+    @GetMapping("/borrow-requests")
+    public ResponseEntity<PageResponse<BorrowedBookResponse>> findAllBorrowRequests(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(service.findAllBorrowRequests(page, size, connectedUser));
+    }
+
 }

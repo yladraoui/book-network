@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { BookCard } from '../../components/book-card/book-card';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { BookResponse, PageResponseBookResponse } from '../../../../services/models';
-import { borrowBook, findAllBooks } from '../../../../services/functions';
+import { borrowBook, findAllBooks, requestBorrowBook } from '../../../../services/functions';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiConfiguration } from '../../../../services/api-configuration';
@@ -33,37 +33,39 @@ export class BookList {
   loadBooks(): void {
     findAllBooks(this.http, this.config.rootUrl, { page: this.page, size: this.size }).subscribe({
       next: (res) => {
-        console.log(">>>> res :", res);
         this.bookResponse = res.body || {};
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error while uploading books', err)
+      error: (err) => console.error('Error while loading books:', err)
     });
-    
   }
 
-  borrowBook(book: BookResponse): void {
+  /**
+   * Submits a borrow request for the selected book and triggers an email to the owner.
+   */
+  requestBorrow(book: BookResponse): void {
     if (!book.id) return;
     this.message = '';
 
-    borrowBook(this.http, this.config.rootUrl, { 'book-id': book.id }).subscribe({
+    requestBorrowBook(this.http, this.config.rootUrl, { 'book-id': book.id }).subscribe({
       next: () => {
         this.level = 'success';
-        this.message = `Le livre "${book.title}" a été emprunté avec succès !`;
+        this.message = `Borrow request sent successfully for "${book.title}"! An email notification has been sent to the owner.`;
         this.loadBooks();
       },
       error: (err) => {
         this.level = 'danger';
-        this.message = err.error?.error || 'Impossible d\'emprunter ce livre.';
+        this.message = err.error?.error || 'Failed to submit borrow request.';
+        this.cdr.detectChanges();
       }
     });
   }
 
   displayBookDetails(book: BookResponse): void {
-  if (book.id) {
-    this.router.navigate(['books', 'details', book.id]); // Ajustez la route selon vos déclinaisons dans app.routes.ts
+    if (book.id) {
+      this.router.navigate(['books', 'details', book.id]);
+    }
   }
-}
 
   onPageChange(newPage: number): void {
     this.page = newPage;

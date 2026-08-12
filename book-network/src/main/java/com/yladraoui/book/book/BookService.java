@@ -23,4 +23,5 @@ public interface BookService {
     public void uploadCoverPicture(MultipartFile file, Authentication connectedUser, Long bookId);
     public Long requestBorrowBook(Long bookId, Authentication connectedUser);
     public Long approveBorrowRequest(Long historyId, Authentication connectedUser);
+    public PageResponse<BorrowedBookResponse> findAllBorrowRequests(int page, int size, Authentication connectedUser);
 }

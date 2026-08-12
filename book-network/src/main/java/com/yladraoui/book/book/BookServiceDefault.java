@@ -209,6 +209,9 @@ public class BookServiceDefault implements BookService{
             throw new OperationNotPermittedException("The book is not returned yet. You cannot approve its return");
         }
 
+        book.setShareable(true);
+        bookRepository.save(book);
+
         bookTransactionHistory.get().setReturnApproved(true);
         return bookTransactionHistoryRepository.save(bookTransactionHistory.get()).getId();
     }
@@ -290,10 +293,35 @@ public class BookServiceDefault implements BookService{
         if (history.isBorrowApproved()) {
             throw new OperationNotPermittedException("This borrow request has already been approved");
         }
+        Book book = history.getBook();
+        book.setShareable(false);
+        bookRepository.save(book);
 
         // 3. Approve the request
         history.setBorrowApproved(true);
 
         return bookTransactionHistoryRepository.save(history).getId();
+    }
+
+    //>>>>>>>>>>>>>>>>>>>>> <<<<<<<<<<<<<<<<<<<
+    public PageResponse<BorrowedBookResponse> findAllBorrowRequests(int page, int size, Authentication connectedUser) {
+        User user = ((User) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+
+        Page<BookTransactionHistory> allBorrowRequests = bookTransactionHistoryRepository.findAllBorrowRequests(pageable, user.getId());
+
+        List<BorrowedBookResponse> bookResponses = allBorrowRequests.stream()
+                .map(bookMapper::toBorrowedBookResponse)
+                .toList();
+
+        return new PageResponse<>(
+                bookResponses,
+                allBorrowRequests.getNumber(),
+                allBorrowRequests.getSize(),
+                allBorrowRequests.getTotalElements(),
+                allBorrowRequests.getTotalPages(),
+                allBorrowRequests.isFirst(),
+                allBorrowRequests.isLast()
+        );
     }
 }

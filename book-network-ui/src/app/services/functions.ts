@@ -21,6 +21,8 @@ export type { RequestBorrowBook$Params as RequestBorrowBook$Params } from './fn/
 export { requestBorrowBook as requestBorrowBook } from './fn/book/request-borrow-book';
 export type { UpdateShareableStatus$Params as UpdateShareableStatus$Params } from './fn/book/update-shareable-status';
 export { updateShareableStatus as updateShareableStatus } from './fn/book/update-shareable-status';
+export type { ApproveBorrowRequest$Params as ApproveBorrowRequest$Params } from './fn/book/approve-borrow-request';
+export { approveBorrowRequest as approveBorrowRequest } from './fn/book/approve-borrow-request';
 export type { UpdateArchivedStatus$Params as UpdateArchivedStatus$Params } from './fn/book/update-archived-status';
 export { updateArchivedStatus as updateArchivedStatus } from './fn/book/update-archived-status';
 export type { FindBookById$Params as FindBookById$Params } from './fn/book/find-book-by-id';
@@ -31,6 +33,8 @@ export type { FindAllBooksByOwner$Params as FindAllBooksByOwner$Params } from '.
 export { findAllBooksByOwner as findAllBooksByOwner } from './fn/book/find-all-books-by-owner';
 export type { FindAllBooksBorrowedBooks$Params as FindAllBooksBorrowedBooks$Params } from './fn/book/find-all-books-borrowed-books';
 export { findAllBooksBorrowedBooks as findAllBooksBorrowedBooks } from './fn/book/find-all-books-borrowed-books';
+export type { FindAllBorrowRequests$Params as FindAllBorrowRequests$Params } from './fn/book/find-all-borrow-requests';
+export { findAllBorrowRequests as findAllBorrowRequests } from './fn/book/find-all-borrow-requests';
 export type { Register$Params as Register$Params } from './fn/authentication/register';
 export { register as register } from './fn/authentication/register';
 export type { Authenticate$Params as Authenticate$Params } from './fn/authentication/authenticate';
