@@ -119,4 +119,20 @@ public class BookController {
         return  ResponseEntity.accepted().build();
     }
 
+    @PostMapping("/borrow/request/{book-id}")
+    public ResponseEntity<Long> requestBorrowBook(
+            @PathVariable("book-id") Long bookId,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(service.requestBorrowBook(bookId, connectedUser));
+    }
+
+    @PatchMapping("/borrow/approve/{history-id}")
+    public ResponseEntity<Long> approveBorrowRequest(
+            @PathVariable("history-id") Long historyId,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(service.approveBorrowRequest(historyId, connectedUser));
+    }
+
 }

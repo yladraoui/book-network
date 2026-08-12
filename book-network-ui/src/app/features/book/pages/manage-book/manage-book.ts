@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiConfiguration } from '../../../../services/api-configuration';
@@ -15,7 +15,7 @@ import { mapValidationErrors } from '../../../../shared/utils/validation-err-mes
   templateUrl: './manage-book.html',
   styleUrl: './manage-book.scss',
 })
-export class ManageBook {
+export class ManageBook implements OnInit{
  private http = inject(HttpClient);
   private config = inject(ApiConfiguration);
   private router = inject(Router);
@@ -74,9 +74,12 @@ export class ManageBook {
   }
 
   saveBook(): void {
+    console.log(">>>>>>>>>>>>>> saveBook()>>>>>>>>");
     this.errorMsg = [];
     saveBook(this.http, this.config.rootUrl, { body: this.bookRequest }).subscribe({
       next: (res) => {
+         console.log(">>>>>>>>>>>>>> Res >>>>>>>> ", res);
+         console.log(">>>>>>>>>>>>>> Res.body >>>>>>>> ", res.body);
         const savedBookId = res.body;
         if (this.selectedBookCover && savedBookId) {
           this.uploadCover(savedBookId);
@@ -85,6 +88,7 @@ export class ManageBook {
         }
       },
       error: (err) => {
+        console.log(">>>>>>>>>>>>>> Err >>>>>>>> ", err);
         const error = handleApiError(err);
         this.errorMsg = mapValidationErrors( error);
         this.cdr.detectChanges();

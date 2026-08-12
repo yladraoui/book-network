@@ -1,13 +1,16 @@
 package com.yladraoui.book.book;
 
 import com.yladraoui.book.common.PageResponse;
+import com.yladraoui.book.email.EmailService;
 import com.yladraoui.book.exception.OperationNotPermittedException;
 import com.yladraoui.book.file.FileStorageService;
 import com.yladraoui.book.history.BookTransactionHistory;
 import com.yladraoui.book.history.BookTransactionHistoryRepository;
 import com.yladraoui.book.user.User;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,12 +26,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookServiceDefault implements BookService{
 
     private final FileStorageService fileStorageService;
     private final BookRepository bookRepository;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
     private final BookMapper bookMapper;
+    private final EmailService emailService;
 
     public @Nullable Long save(BookRequest request, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
@@ -217,5 +222,78 @@ public class BookServiceDefault implements BookService{
         book.setBookCover(bookCover);
         bookRepository.save(book);
 
+    }
+
+    //>>>>>>>>>>> Borrow Request >>>>>>>>>>>>
+    public Long requestBorrowBook(Long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID: " + bookId));
+
+        User borrower = ((User) connectedUser.getPrincipal());
+        User owner = book.getOwner();
+
+        // 1. Business validations (cannot borrow own book, book must not be archived, etc.)
+        if (Objects.equals(book.getOwner().getId(), borrower.getId())) {
+            throw new OperationNotPermittedException("You cannot borrow your own book");
+        }
+        if (book.isArchive() || !book.isShareable()) {
+            throw new OperationNotPermittedException("The requested book cannot be borrowed");
+        }
+
+        // Check if the book is already borrowed or requested by the user
+        final boolean isAlreadyBorrowed = bookTransactionHistoryRepository.isAlreadyBorrowedByUser(bookId, borrower.getId());
+        if (isAlreadyBorrowed) {
+            throw new OperationNotPermittedException("You have already requested or borrowed this book");
+        }
+
+        // 2. Create transaction record with pending approval status
+        BookTransactionHistory history = BookTransactionHistory.builder()
+                .user(borrower)
+                .book(book)
+                .borrowApproved(false)
+                .returned(false)
+                .returnApproved(false)
+                .build();
+
+        Long savedHistoryId = bookTransactionHistoryRepository.save(history).getId();
+
+        // 3. Send email notification to the book owner
+        try {
+            emailService.sendBorrowRequestEmail(
+                    owner.getEmail(),
+                    owner.fullName(),
+                    borrower.fullName(),
+                    borrower.getEmail(),
+                    book.getTitle(),
+                    book.getIsbn()
+            );
+        } catch (MessagingException e) {
+            log.error("Failed to send borrow request email", e);
+        }
+
+        return savedHistoryId;
+    }
+
+    //>>>>>>>>>>>>>> approve borrow Request <<<<<<<<<<<<<<<<<
+    public Long approveBorrowRequest(Long historyId, Authentication connectedUser) {
+        BookTransactionHistory history = bookTransactionHistoryRepository.findById(historyId)
+                .orElseThrow(() -> new EntityNotFoundException("No transaction history found with ID: " + historyId));
+
+        User connected = ((User) connectedUser.getPrincipal());
+
+        // 1. Ensure the connected user is the owner of the book
+        if (!Objects.equals(history.getBook().getOwner().getId(), connected.getId())) {
+            throw new OperationNotPermittedException("You cannot approve a borrow request for a book you do not own");
+        }
+
+        // 2. Ensure the request is not already approved
+        if (history.isBorrowApproved()) {
+            throw new OperationNotPermittedException("This borrow request has already been approved");
+        }
+
+        // 3. Approve the request
+        history.setBorrowApproved(true);
+
+        return bookTransactionHistoryRepository.save(history).getId();
     }
 }

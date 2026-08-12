@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 
-public interface BookTransactionHistoryRepository extends JpaRepository<BookTransactionHistory,Integer> {
+public interface BookTransactionHistoryRepository extends JpaRepository<BookTransactionHistory,Long> {
 
     @Query("""
             SELECT history
@@ -54,4 +54,12 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
             AND history.returned = true
             """)
     Optional<BookTransactionHistory> findByBookIdAndOwnerId(Long bookId, Long userId);
+
+    @Query("""
+            SELECT CASE WHEN COUNT(history) > 0 THEN true ELSE false END
+            FROM BookTransactionHistory history
+            WHERE history.book.id = :bookId
+              AND history.returned = false
+            """)
+    boolean isAlreadyBorrowed(Long bookId);
 }

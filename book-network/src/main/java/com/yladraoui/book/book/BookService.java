@@ -21,4 +21,6 @@ public interface BookService {
     public Long returnBorrowedBook(Long bookId, Authentication connectedUser);
     public Long approveReturnBorrowedBook(Long bookId, Authentication connectedUser);
     public void uploadCoverPicture(MultipartFile file, Authentication connectedUser, Long bookId);
+    public Long requestBorrowBook(Long bookId, Authentication connectedUser);
+    public Long approveBorrowRequest(Long historyId, Authentication connectedUser);
 }

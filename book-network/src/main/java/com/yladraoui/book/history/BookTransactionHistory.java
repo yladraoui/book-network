@@ -27,6 +27,7 @@ public class BookTransactionHistory extends BaseEntity {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    private boolean borrowApproved = false;
     private boolean returned;
     private boolean returnApproved;
 

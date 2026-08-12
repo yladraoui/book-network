@@ -59,4 +59,45 @@ public class EmailService {
         helper.setText(template, true);
         mailSender.send(mimeMessage);
     }
+
+
+    /**
+     * Sends an email notification to the book owner when a borrow request is created.
+     */
+    @Async
+    public void sendBorrowRequestEmail(
+            String ownerEmail,
+            String ownerName,
+            String borrowerName,
+            String borrowerEmail,
+            String bookTitle,
+            String isbn
+    ) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(
+                mimeMessage,
+                MULTIPART_MODE_MIXED,
+                UTF_8.name()
+        );
+
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("ownerName", ownerName);
+        properties.put("borrowerName", borrowerName);
+        properties.put("borrowerEmail", borrowerEmail);
+        properties.put("bookTitle", bookTitle);
+        properties.put("isbn", isbn);
+
+        Context context = new Context();
+        context.setVariables(properties);
+
+        helper.setFrom("yladraouii@gmail.com");
+        helper.setTo(ownerEmail);
+        helper.setReplyTo(borrowerEmail); // Allows the owner to reply directly to the borrower
+        helper.setSubject("New Borrow Request for: " + bookTitle);
+
+        String template = templateEngine.process("borrow_request", context);
+
+        helper.setText(template, true);
+        mailSender.send(mimeMessage);
+    }
 }
