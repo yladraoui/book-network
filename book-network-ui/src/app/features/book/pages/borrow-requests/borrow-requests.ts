@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { Rating } from '../../components/rating/rating';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { BorrowedBookResponse, PageResponseBorrowedBookResponse } from '../../..
   templateUrl: './borrow-requests.html',
   styleUrl: './borrow-requests.scss',
 })
-export class BorrowRequests {
+export class BorrowRequests implements OnInit{
   private http = inject(HttpClient);
   private config = inject(ApiConfiguration);
   private cdr = inject(ChangeDetectorRef);
@@ -62,6 +62,7 @@ export class BorrowRequests {
         this.level = 'success';
         this.message = `Demande d'emprunt pour le livre "${book.title || 'Sans titre'}" approuvée avec succès !`;
         this.loadBorrowRequests();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.level = 'danger';

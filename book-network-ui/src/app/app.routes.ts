@@ -3,8 +3,10 @@ import { FeedbackCard } from './features/feedback/components/feedback-card/feedb
 import { FeedbackList } from './features/feedback/pages/feedback-list/feedback-list';
 import { BookDetails } from './features/book/pages/book-details/book-details';
 import { Landing } from './shared/components/landing/landing';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
+    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     {
         path: 'welcome',
         component: Landing
@@ -15,20 +17,12 @@ export const routes: Routes = [
     },
     {
     path: 'books',
+    canActivate: [authGuard],
     loadChildren: () => import('./features/book/book.routes').then(m => m.BOOK_ROUTES)
-    },
-    {
-        path: 'feedback-test',
-        component: FeedbackCard
-    },
-    {
-        path: 'feedback-list-test',
-        component: FeedbackList
     },
     {
         path: 'book-details-test',
         component: BookDetails
     },
-    { path: '**', redirectTo: 'welcome' },
-     { path: '', redirectTo: 'welcome', pathMatch: 'full' }
+    { path: '**', redirectTo: 'welcome' }
 ];
