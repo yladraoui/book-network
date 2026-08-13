@@ -174,9 +174,6 @@ public class BookServiceDefault implements BookService{
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
 
-        if (book.isArchive() || !book.isShareable()){
-            throw new OperationNotPermittedException("The requested book cannot be returned since it is archived or not shareable");
-        }
 
         User user = (User) connectedUser.getPrincipal();
         if (Objects.equals(book.getOwner().getId(), user.getId())){
@@ -195,9 +192,6 @@ public class BookServiceDefault implements BookService{
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("No book found with the ID: " + bookId));
 
-        if (book.isArchive() || !book.isShareable()){
-            throw new OperationNotPermittedException("The requested book cannot be returned since it is archived or not shareable");
-        }
 
         User user = (User) connectedUser.getPrincipal();
         if (!Objects.equals(book.getOwner().getId(), user.getId())){
@@ -289,18 +283,18 @@ public class BookServiceDefault implements BookService{
             throw new OperationNotPermittedException("You cannot approve a borrow request for a book you do not own");
         }
 
-        // 2. Ensure the request is not already approved
-        if (history.isBorrowApproved()) {
-            throw new OperationNotPermittedException("This borrow request has already been approved");
-        }
+
         Book book = history.getBook();
         book.setShareable(false);
         bookRepository.save(book);
 
         // 3. Approve the request
         history.setBorrowApproved(true);
+        Long id = bookTransactionHistoryRepository.save(history).getId();
+        history = bookTransactionHistoryRepository.findById(historyId)
+                .orElseThrow(() -> new EntityNotFoundException("No transaction history found with ID: " + historyId));
 
-        return bookTransactionHistoryRepository.save(history).getId();
+        return id;
     }
 
     //>>>>>>>>>>>>>>>>>>>>> <<<<<<<<<<<<<<<<<<<

@@ -42,7 +42,7 @@
         <!-- $event.stopPropagation() évite d'ouvrir la page de détails quand on clique sur Emprunter -->
         <button (click)="$event.stopPropagation(); onBorrow()" [disabled]="book.archived || !book.shareable"
           class="btn btn-primary w-100 btn-sm font-weight-medium">
-          Emprunter
+          Borrow book
         </button>
       </ng-container>
 

@@ -29,10 +29,10 @@
                 <app-rating [rating]="book.rate || 0"></app-rating>
               </td>
               <td>
-                <span *ngIf="book.returnApproved" class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
+                <span *ngIf="book.borrowApproved" class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
                   <i class="fas fa-check-circle me-1"></i> Approved
                 </span>
-                <span *ngIf="!book.returnApproved" class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill">
+                <span *ngIf="!book.borrowApproved" class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill">
                   <i class="fas fa-clock me-1"></i> Pending Approval
                 </span>
               </td>

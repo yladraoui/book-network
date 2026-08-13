@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, inject, Input, OnInit, Output } from '@an
 import { FeedbackCard } from '../../../feedback/components/feedback-card/feedback-card';
 import { FeedbackList } from '../../../feedback/pages/feedback-list/feedback-list';
 import { BookResponse } from '../../../../services/models';
-import { borrowBook, findBookById } from '../../../../services/functions';
+import { borrowBook, findBookById, requestBorrowBook } from '../../../../services/functions';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from '../../../../services/api-configuration';
@@ -47,26 +47,23 @@ export class BookDetails implements OnInit{
     });
   }
 
-  onBorrowBook(): void {
-    if (!this.book.id) return;
+  requestBorrow(book: BookResponse): void {
+    if (!book.id) return;
     this.message = '';
-
-    borrowBook(this.http, this.config.rootUrl, { 'book-id': this.book.id }).subscribe({
+  
+    requestBorrowBook(this.http, this.config.rootUrl, { 'book-id': book.id }).subscribe({
       next: () => {
         this.level = 'success';
-        this.message = `Le livre "${this.book.title}" a été emprunté avec succès !`;
-        if (this.book.id) {
-          this.loadBookDetails(this.book.id);
-        }
-      },
-      error: (err) => {
-        this.level = 'danger';
-        this.message = err.error?.error || 'Impossible d\'emprunter ce livre.';
+        this.message = `Borrow request sent successfully for "${book.title}"! An email notification has been sent to the owner.`;
         this.cder.detectChanges();
-      }
-    });
-  }
-
+        },
+        error: (err) => {
+          this.level = 'danger';
+          this.message = err.error?.error || 'Failed to submit borrow request.';
+          this.cder.detectChanges();
+        }
+      });
+    }
   get fullStars(): number[] {
     return Array(Math.floor(this.book?.rate || 0)).fill(0);
   }

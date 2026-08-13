@@ -12,6 +12,7 @@ public class BorrowedBookResponse {
     private String title;
     private String authorName;
     private double rate;
+    private boolean borrowApproved;
     private boolean returned;
     private boolean returnApproved;
 }

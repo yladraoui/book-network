@@ -3,6 +3,7 @@
 
 export interface BorrowedBookResponse {
   authorName?: string;
+  borrowApproved?: boolean;
   id?: number;
   rate?: number;
   returnApproved?: boolean;

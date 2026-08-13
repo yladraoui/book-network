@@ -64,10 +64,10 @@
               <!-- Borrow button -->
               <div>
                 <button
-                  (click)="onBorrowBook()"
+                  (click)="requestBorrow(book)"
                   [disabled]="book.archived || !book.shareable"
                   class="btn btn-primary w-100 py-2 fw-medium">
-                  <i class="fas fa-bookmark me-2"></i> Borrow this book
+                  <i class="fas fa-bookmark me-2"></i> request borrow
                 </button>
               </div>
 

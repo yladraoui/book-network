@@ -67,7 +67,7 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
             SELECT history
             FROM BookTransactionHistory history
             WHERE history.book.owner.id = :userId
-              AND history.borrowApproved = false
+            AND history.borrowApproved = false
             """)
     Page<BookTransactionHistory> findAllBorrowRequests(Pageable pageable, Long userId);
 }

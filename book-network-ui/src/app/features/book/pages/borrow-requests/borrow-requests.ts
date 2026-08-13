@@ -39,6 +39,8 @@ export class BorrowRequests implements OnInit{
       size: this.size,
     }).subscribe({
       next: (res) => {
+        console.log(">>>>>>>>>>>>>>> res.body : ", res.body);
+        console.log(">>>>>>>>>>>>>>> res.body.content : ", res.body.content);
         this.borrowRequestsResponse = res.body || {};
         this.cdr.detectChanges();
       },
@@ -61,6 +63,8 @@ export class BorrowRequests implements OnInit{
       next: () => {
         this.level = 'success';
         this.message = `Demande d'emprunt pour le livre "${book.title || 'Sans titre'}" approuvée avec succès !`;
+        console.log(">>>>>> approveBorrowRequest(): ");
+        console.log(">>>>>> >>>>> ID : ", book.id);
         this.loadBorrowRequests();
         this.cdr.detectChanges();
       },
