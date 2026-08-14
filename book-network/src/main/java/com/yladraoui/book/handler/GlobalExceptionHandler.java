@@ -99,6 +99,29 @@ public class GlobalExceptionHandler {
                 );
     }
 
+
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException exp){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ExceptionResponse> handleException(IllegalStateException exp){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception exp){
         //log the exception
@@ -108,17 +131,6 @@ public class GlobalExceptionHandler {
                 .body(
                         ExceptionResponse.builder()
                                 .businessErrorDescription("Internal error, contact the admin")
-                                .error(exp.getMessage())
-                                .build()
-                );
-    }
-
-    @ExceptionHandler(OperationNotPermittedException.class)
-    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException exp){
-        return ResponseEntity
-                .status(BAD_REQUEST)
-                .body(
-                        ExceptionResponse.builder()
                                 .error(exp.getMessage())
                                 .build()
                 );
