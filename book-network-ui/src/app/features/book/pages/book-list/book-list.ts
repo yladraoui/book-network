@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { BookCard } from '../../components/book-card/book-card';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { BookResponse, PageResponseBookResponse } from '../../../../services/models';
-import { borrowBook, findAllBooks, requestBorrowBook } from '../../../../services/functions';
+import { findAllBooks, requestBorrowBook } from '../../../../services/functions';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiConfiguration } from '../../../../services/api-configuration';

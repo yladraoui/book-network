@@ -41,3 +41,9 @@ export type { Authenticate$Params as Authenticate$Params } from './fn/authentica
 export { authenticate as authenticate } from './fn/authentication/authenticate';
 export type { Confirm$Params as Confirm$Params } from './fn/authentication/confirm';
 export { confirm as confirm } from './fn/authentication/confirm';
+export type { GetProfile$Params as GetProfile$Params } from './fn/user/get-profile';
+export { getProfile as getProfile } from './fn/user/get-profile';
+export type { UpdateProfile$Params as UpdateProfile$Params } from './fn/user/update-profile';
+export { updateProfile as updateProfile } from './fn/user/update-profile';
+export type { ChangePassword$Params as ChangePassword$Params } from './fn/user/change-password';
+export { changePassword as changePassword } from './fn/user/change-password';

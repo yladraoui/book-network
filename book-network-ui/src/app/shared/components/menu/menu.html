@@ -42,8 +42,17 @@
         </li>
       </ul>
 
-      <!-- User Actions / Logout -->
+      <!-- User Actions : Profile & Logout -->
       <div class="d-flex align-items-center gap-3">
+        <!-- Profile Link -->
+        <a class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 text-white border-0" 
+           routerLink="/profile" 
+           routerLinkActive="active">
+          <i class="fas fa-user-circle fs-5 text-primary"></i>
+          <span>Profile</span>
+        </a>
+
+        <!-- Logout Button -->
         <button (click)="logout()" class="btn btn-outline-light btn-sm d-flex align-items-center gap-2">
           <i class="fas fa-sign-out-alt"></i>
           <span>Logout</span>
