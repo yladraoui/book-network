@@ -47,3 +47,11 @@ export type { UpdateProfile$Params as UpdateProfile$Params } from './fn/user/upd
 export { updateProfile as updateProfile } from './fn/user/update-profile';
 export type { ChangePassword$Params as ChangePassword$Params } from './fn/user/change-password';
 export { changePassword as changePassword } from './fn/user/change-password';
+export type { ToggleUserLockStatus$Params as ToggleUserLockStatus$Params } from './fn/admin/toggle-user-lock-status';
+export { toggleUserLockStatus as toggleUserLockStatus } from './fn/admin/toggle-user-lock-status';
+export type { FindAllUsers$Params as FindAllUsers$Params } from './fn/admin/find-all-users';
+export { findAllUsers as findAllUsers } from './fn/admin/find-all-users';
+export type { GetStats$Params as GetStats$Params } from './fn/admin/get-stats';
+export { getStats as getStats } from './fn/admin/get-stats';
+export type { DeleteBook$Params as DeleteBook$Params } from './fn/admin/delete-book';
+export { deleteBook as deleteBook } from './fn/admin/delete-book';
