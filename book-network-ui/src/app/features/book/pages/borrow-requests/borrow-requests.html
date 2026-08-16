@@ -1,13 +1,13 @@
 <div class="container py-4">
   <h1 class="h3 font-weight-bold text-dark mb-4">Borrow Requests Approval</h1>
 
-  <!-- Message d'alerte -->
+  <!-- Alert message -->
   <div *ngIf="message" [class]="'alert alert-' + level + ' alert-dismissible fade show mb-4'" role="alert">
     <span>{{ message }}</span>
     <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
   </div>
 
-  <!-- Tableau des demandes -->
+  <!-- Requests Table -->
   <div class="card shadow-sm border-0 mb-4">
     <div class="card-body p-0">
       <div class="table-responsive" *ngIf="borrowRequestsResponse.content && borrowRequestsResponse.content.length > 0; else emptyBlock">
@@ -52,7 +52,7 @@
         </table>
       </div>
 
-      <!-- Bloc si aucune demande -->
+      <!-- no requests bloc -->
       <ng-template #emptyBlock>
         <div class="text-center py-5 text-muted">
           <i class="fas fa-inbox fs-1 mb-3 d-block text-secondary"></i>

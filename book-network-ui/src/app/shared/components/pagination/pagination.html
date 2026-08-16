@@ -1,5 +1,5 @@
 <nav *ngIf="totalPages > 1" class="flex items-center justify-center space-x-1 my-6" aria-label="Pagination">
-  <!-- Premiere page -->
+  <!-- first page -->
   <button
     (click)="goToFirst()"
     [disabled]="isFirst"
@@ -8,7 +8,7 @@
     <i class="fas fa-angle-double-left"></i>
   </button>
 
-  <!-- Page precedente -->
+  <!-- previous page -->
   <button
     (click)="goToPrevious()"
     [disabled]="isFirst"
@@ -16,7 +16,7 @@
     <i class="fas fa-angle-left"></i>
   </button>
 
-  <!-- Numeros de page -->
+  <!-- page number-->
   <button
     *ngFor="let p of pages"
     (click)="goToPage(p)"
@@ -30,7 +30,7 @@
     {{ p + 1 }}
   </button>
 
-  <!-- Page suivante -->
+  <!-- next page -->
   <button
     (click)="goToNext()"
     [disabled]="isLast"
@@ -38,7 +38,7 @@
     <i class="fas fa-angle-right"></i>
   </button>
 
-  <!-- Derniere page -->
+  <!-- Last page -->
   <button
     (click)="goToLast()"
     [disabled]="isLast"

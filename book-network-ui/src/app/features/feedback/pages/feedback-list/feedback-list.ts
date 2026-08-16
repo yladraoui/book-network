@@ -7,7 +7,6 @@ import { ApiConfiguration } from '../../../../services/api-configuration';
 import { FeedbackCard } from '../../components/feedback-card/feedback-card';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { FormsModule } from '@angular/forms';
-import { Rating } from '../../../book/components/rating/rating';
 
 @Component({
   selector: 'app-feedback-list',

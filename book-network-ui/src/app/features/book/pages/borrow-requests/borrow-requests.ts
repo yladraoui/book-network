@@ -30,9 +30,6 @@ export class BorrowRequests implements OnInit{
     this.loadBorrowRequests();
   }
 
-  /**
-   * Charge les demandes d'emprunt en attente via GET /books/borrow-requests
-   */
   loadBorrowRequests(): void {
     findAllBorrowRequests(this.http, this.config.rootUrl, {
       page: this.page,
@@ -50,15 +47,13 @@ export class BorrowRequests implements OnInit{
     });
   }
 
-  /**
-   * Approuve une demande via PATCH /books/borrow/approve/{history-id}
-   */
+
   approveRequest(book: BorrowedBookResponse): void {
     if (!book.id) return;
     this.message = '';
 
     approveBorrowRequest(this.http, this.config.rootUrl, {
-      'history-id': book.id, // Corrected parameter name matching backend controller path variable
+      'history-id': book.id, 
     }).subscribe({
       next: () => {
         this.level = 'success';
@@ -76,9 +71,6 @@ export class BorrowRequests implements OnInit{
     });
   }
 
-  /**
-   * Gestion du changement de page
-   */
   onPageChange(newPage: number): void {
     this.page = newPage;
     this.loadBorrowRequests();

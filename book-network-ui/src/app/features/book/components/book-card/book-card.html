@@ -39,7 +39,7 @@
     <div class="pt-2 border-top d-flex align-items-center justify-content-between gap-2 mt-auto">
       
       <ng-container *ngIf="!isManageMode">
-        <!-- $event.stopPropagation() évite d'ouvrir la page de détails quand on clique sur Emprunter -->
+        <!-- $event.stopPropagation() to not open the book details  -->
         <button (click)="$event.stopPropagation(); onBorrow()" [disabled]="book.archived || !book.shareable"
           class="btn btn-primary w-100 btn-sm font-weight-medium">
           Borrow book

@@ -8,17 +8,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './pagination.scss',
 })
 export class Pagination {
-  @Input() page = 0;           // Index de la page courante (commence à 0)
-  @Input() totalPages = 0;     // Nombre total de pages
-  @Input() isFirst = true;     // Est-ce la première page ?
-  @Input() isLast = true;      // Est-ce la dernière page ?
+  @Input() page = 0;           
+  @Input() totalPages = 0;     
+  @Input() isFirst = true;     
+  @Input() isLast = true;      
 
   @Output() pageChange = new EventEmitter<number>();
 
-  /**
-   * Génère le tableau des numéros de pages à afficher.
-   * Affiche jusqu'à 5 pages autour de la page courante.
-   */
   get pages(): number[] {
     const pagesArray: number[] = [];
     const maxVisiblePages = 5;

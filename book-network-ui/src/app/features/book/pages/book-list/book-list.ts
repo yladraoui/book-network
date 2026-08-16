@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { BookCard } from '../../components/book-card/book-card';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { BookResponse, PageResponseBookResponse } from '../../../../services/models';
@@ -14,7 +14,7 @@ import { ApiConfiguration } from '../../../../services/api-configuration';
   templateUrl: './book-list.html',
   styleUrl: './book-list.scss',
 })
-export class BookList {
+export class BookList implements OnInit{
  private http = inject(HttpClient);
   private router = inject(Router);
   private config = inject(ApiConfiguration);

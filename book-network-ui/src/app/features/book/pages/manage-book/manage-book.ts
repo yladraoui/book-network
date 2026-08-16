@@ -74,12 +74,9 @@ export class ManageBook implements OnInit{
   }
 
   saveBook(): void {
-    console.log(">>>>>>>>>>>>>> saveBook()>>>>>>>>");
     this.errorMsg = [];
     saveBook(this.http, this.config.rootUrl, { body: this.bookRequest }).subscribe({
       next: (res) => {
-         console.log(">>>>>>>>>>>>>> Res >>>>>>>> ", res);
-         console.log(">>>>>>>>>>>>>> Res.body >>>>>>>> ", res.body);
         const savedBookId = res.body;
         if (this.selectedBookCover && savedBookId) {
           this.uploadCover(savedBookId);
@@ -88,7 +85,6 @@ export class ManageBook implements OnInit{
         }
       },
       error: (err) => {
-        console.log(">>>>>>>>>>>>>> Err >>>>>>>> ", err);
         const error = handleApiError(err);
         this.errorMsg = mapValidationErrors( error);
         this.cdr.detectChanges();

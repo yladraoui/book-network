@@ -1,11 +1,9 @@
 import { Routes } from '@angular/router';
-import { FeedbackCard } from './features/feedback/components/feedback-card/feedback-card';
-import { FeedbackList } from './features/feedback/pages/feedback-list/feedback-list';
-import { BookDetails } from './features/book/pages/book-details/book-details';
 import { Landing } from './shared/components/landing/landing';
 import { authGuard } from './core/guards/auth.guard';
 import { Profile } from './features/profile/pages/profile/profile';
 import { AdminDashboard } from './features/admin/pages/admin-dashboard/admin-dashboard';
+import { adminGuard } from './core/guards/admin-guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -24,16 +22,13 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
+        canActivate: [adminGuard, authGuard],
         component: AdminDashboard
     },
     {
         path: 'profile',
         canActivate: [authGuard],
         component: Profile
-    },
-    {
-        path: 'book-details-test',
-        component: BookDetails
     },
     { path: '**', redirectTo: 'welcome' }
 ];

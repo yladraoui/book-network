@@ -4,7 +4,7 @@ import { ApiConfiguration } from '../../../../services/api-configuration';
 import { UserProfile } from '../../../../services/models/user-profile';
 import { CommonModule } from '@angular/common';
 import { findAllUsers, getStats, toggleUserLockStatus } from '../../../../services/functions';
-import { AdminStatsResponse, UserProfileResponse } from '../../../../services/models';
+import { AdminStatsResponse } from '../../../../services/models';
 
 @Component({
   selector: 'app-admin-dashboard',

@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Input, OnInit, Output } from '@angular/core';
-import { FeedbackCard } from '../../../feedback/components/feedback-card/feedback-card';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FeedbackList } from '../../../feedback/pages/feedback-list/feedback-list';
 import { BookResponse } from '../../../../services/models';
-import { borrowBook, findBookById, requestBorrowBook } from '../../../../services/functions';
+import { findBookById, requestBorrowBook } from '../../../../services/functions';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from '../../../../services/api-configuration';
@@ -65,10 +64,10 @@ export class BookDetails implements OnInit{
       });
     }
   get fullStars(): number[] {
-    return Array(Math.floor(this.book?.rate || 0)).fill(0);
+    return new Array(Math.floor(this.book?.rate || 0)).fill(0);
   }
 
   get emptyStars(): number[] {
-    return Array(5 - Math.floor(this.book?.rate || 0)).fill(0);
+    return new Array(5 - Math.floor(this.book?.rate || 0)).fill(0);
   }
 }

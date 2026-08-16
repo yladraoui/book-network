@@ -2,12 +2,11 @@
   <div class="card shadow-sm border-0">
     <div class="card-body p-3 p-md-4">
       
-      <!-- Titre réduit légèrement en marge -->
+
       <h2 class="card-title h5 mb-3 text-dark font-weight-bold">
-        {{ bookRequest.id ? 'Modifier le livre' : 'Nouveau livre' }}
+        {{ bookRequest.id ? 'Edit book' : 'New book' }}
       </h2>
 
-      <!-- Message d'erreur -->
       <div *ngIf="errorMsg.length > 0" class="alert alert-danger mb-3 py-2" role="alert">
         <ul class="mb-0 list-unstyled small">
           <li *ngFor="let msg of errorMsg">
@@ -18,13 +17,13 @@
 
       <form (ngSubmit)="saveBook()">
         
-        <!-- Organisation en grille 2 colonnes pour PC (row) -->
+        
         <div class="row g-3">
           
-          <!-- COLONNE GAUCHE (Image + Titre + Auteur + ISBN) -->
+      
           <div class="col-12 col-lg-6 d-flex flex-column justify-content-between">
             
-            <!-- Photo de couverture -->
+           
             <div class="d-flex align-items-center gap-3 mb-2">
               <img
                 [src]="selectedPicture || 'assets/images/default-cover.png'"
@@ -42,9 +41,9 @@
               </div>
             </div>
 
-            <!-- Titre -->
+            
             <div class="mb-2">
-              <label for="title" class="form-label font-weight-bold small mb-1">Titre</label>
+              <label for="title" class="form-label font-weight-bold small mb-1">Title</label>
               <input
                 id="title"
                 type="text"
@@ -55,9 +54,9 @@
                 placeholder="Ex: Le Petit Prince" />
             </div>
 
-            <!-- Auteur -->
+            
             <div class="mb-2">
-              <label for="authorName" class="form-label font-weight-bold small mb-1">Auteur</label>
+              <label for="authorName" class="form-label font-weight-bold small mb-1">Author</label>
               <input
                 id="authorName"
                 type="text"
@@ -68,7 +67,7 @@
                 placeholder="Ex: Antoine de Saint-Exupéry" />
             </div>
 
-            <!-- ISBN -->
+           
             <div class="mb-0">
               <label for="isbn" class="form-label font-weight-bold small mb-1">ISBN</label>
               <input
@@ -83,10 +82,10 @@
 
           </div>
 
-          <!-- COLONNE DROITE (Synopsis + Checkbox) -->
+          
           <div class="col-12 col-lg-6 d-flex flex-column justify-content-between">
             
-            <!-- Synopsis -->
+            
             <div class="mb-2 flex-grow-1 d-flex flex-column">
               <label for="synopsis" class="form-label font-weight-bold small mb-1">Synopsis</label>
               <textarea
@@ -99,7 +98,7 @@
                 placeholder="Résumé du livre..."></textarea>
             </div>
 
-            <!-- Checkbox Partageable -->
+            
             <div class="form-check mb-2">
               <input
                 id="shareable"
@@ -108,7 +107,7 @@
                 name="shareable"
                 class="form-check-input" />
               <label for="shareable" class="form-check-label small">
-                Rendre ce livre disponible au prêt
+                Make this book available to borrow
               </label>
             </div>
 
@@ -116,13 +115,13 @@
 
         </div>
 
-        <!-- Boutons d'action (Pied de formulaire compact) -->
+        
         <div class="d-flex justify-content-end gap-2 pt-2 mt-3 border-top">
           <a routerLink="/books/my-books" class="btn btn-outline-secondary btn-sm">
-            Annuler
+            Cancel
           </a>
           <button type="submit" class="btn btn-primary btn-sm">
-            <i class="fas fa-save me-1"></i> Enregistrer
+            <i class="fas fa-save me-1"></i> Save
           </button>
         </div>
 

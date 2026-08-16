@@ -1,16 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TokenService } from '../../../core/services/token/token.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { jwtDecode } from 'jwt-decode';
-
 @Component({
   selector: 'app-menu',
   imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
 })
-export class Menu {
+export class Menu implements OnInit{
 private tokenService = inject(TokenService);
   private router = inject(Router);
 
@@ -23,8 +21,7 @@ private tokenService = inject(TokenService);
   private checkAdminRole(): void {
     const token = this.tokenService.token;
     if (token) {
-      const decodedToken: any = jwtDecode(token);
-      const roles = decodedToken.authorities || decodedToken.roles || [];
+      const roles = this.tokenService.userRoles;
       this.isAdmin = roles.includes('ADMIN') || roles.includes('ROLE_ADMIN');
     }
   }
