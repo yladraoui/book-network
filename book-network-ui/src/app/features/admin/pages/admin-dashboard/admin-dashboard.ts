@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ApiConfiguration } from '../../../../services/api-configuration';
-import { AdminStats } from '../../../../services/models/admin-stats';
 import { UserProfile } from '../../../../services/models/user-profile';
 import { CommonModule } from '@angular/common';
-import { findAllUsers, getStats } from '../../../../services/functions';
+import { findAllUsers, getStats, toggleUserLockStatus } from '../../../../services/functions';
 import { AdminStatsResponse, UserProfileResponse } from '../../../../services/models';
 
 @Component({
@@ -19,7 +18,7 @@ private http = inject(HttpClient);
   private cdr= inject(ChangeDetectorRef);
 
   stats: AdminStatsResponse = { totalUsers: 0, totalBooks: 0, totalBorrowedBooks: 0 };
-  users: UserProfileResponse[] = [];
+  users: UserProfile[] = [];
   activeTab: 'users' | 'books' = 'users';
 
   ngOnInit(): void {
@@ -36,16 +35,22 @@ private http = inject(HttpClient);
 
   loadUsers(): void {
     findAllUsers(this.http, this.config.rootUrl).subscribe({
-      next: (res) => this.users = res.body.content || [],
-      error: (err) => console.error('Error users', err)
+      next: (res) => {
+        this.users = res.body.content || [];
+        this.cdr.detectChanges();
+      },
+      error: (err) =>{ 
+        console.error('Error users', err);
+        this.cdr.detectChanges();
+      }
     });
-    this.cdr.detectChanges();
   }
 
   toggleLock(user: UserProfile): void {
-    this.http.patch(`${this.config.rootUrl}/admin/users/${user.id}/lock`, {}).subscribe({
+    toggleUserLockStatus(this.http, this.config.rootUrl, {'user-id': user.id || 0}).subscribe({
       next: () => {
         user.accountLocked = !user.accountLocked;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error lock', err)
     });

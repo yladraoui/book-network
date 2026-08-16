@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { TokenService } from '../../../core/services/token/token.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-menu',
@@ -12,6 +13,21 @@ import { CommonModule } from '@angular/common';
 export class Menu {
 private tokenService = inject(TokenService);
   private router = inject(Router);
+
+  isAdmin = false;
+
+  ngOnInit(): void {
+    this.checkAdminRole();
+  }
+
+  private checkAdminRole(): void {
+    const token = this.tokenService.token;
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      const roles = decodedToken.authorities || decodedToken.roles || [];
+      this.isAdmin = roles.includes('ADMIN') || roles.includes('ROLE_ADMIN');
+    }
+  }
 
   logout(): void {
     localStorage.removeItem('token');

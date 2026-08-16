@@ -40,6 +40,13 @@
             <i class="fas fa-paper-plane me-1"></i> Returned Books
           </a>
         </li>
+
+        <!-- ADMIN LINK (Affiche uniquement si l'utilisateur est ADMIN) -->
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link text-warning fw-semibold" routerLink="/admin" routerLinkActive="active">
+            <i class="fas fa-user-shield me-1"></i> Admin Panel
+          </a>
+        </li>
       </ul>
 
       <!-- User Actions : Profile & Logout -->

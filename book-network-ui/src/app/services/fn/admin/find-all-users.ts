@@ -7,14 +7,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { PageResponseUserProfileResponse } from '../../models/page-response-user-profile-response';
+import { PageResponseUserProfile } from '../../models/page-response-user-profile';
 
 export interface FindAllUsers$Params {
   page?: number;
   size?: number;
 }
 
-export function findAllUsers(http: HttpClient, rootUrl: string, params?: FindAllUsers$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseUserProfileResponse>> {
+export function findAllUsers(http: HttpClient, rootUrl: string, params?: FindAllUsers$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseUserProfile>> {
   const rb = new RequestBuilder(rootUrl, findAllUsers.PATH, 'get');
   if (params) {
     rb.query('page', params.page, {});
@@ -26,7 +26,7 @@ export function findAllUsers(http: HttpClient, rootUrl: string, params?: FindAll
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<PageResponseUserProfileResponse>;
+      return r as StrictHttpResponse<PageResponseUserProfile>;
     })
   );
 }

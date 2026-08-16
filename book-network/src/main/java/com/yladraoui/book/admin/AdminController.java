@@ -1,7 +1,6 @@
 package com.yladraoui.book.admin;
 
 import com.yladraoui.book.common.PageResponse;
-import com.yladraoui.book.user.UserProfileResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("admin")
 @RequiredArgsConstructor
 @Tag(name = "Admin")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     private final AdminService adminService;
@@ -25,7 +24,7 @@ public class AdminController {
 
     // Feature 2: Get All Users
     @GetMapping("/users")
-    public ResponseEntity<PageResponse<UserProfileResponse>> findAllUsers(
+    public ResponseEntity<PageResponse<UserProfile>> findAllUsers(
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
             @RequestParam(name = "size", defaultValue = "10", required = false) int size
     ) {
