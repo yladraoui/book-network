@@ -18,29 +18,40 @@ import { handleApiError } from '../../../../core/utils/error-handler.utils';
 export class Login {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private config = inject(ApiConfiguration)
+  private config = inject(ApiConfiguration);
   private tokenService = inject(TokenService);
   private cdr = inject(ChangeDetectorRef);
 
-  authRequest: AuthenticationRequest = {'email': '', password: ''};
+  authRequest: AuthenticationRequest = { email: '', password: '' };
   errorMessage: Array<string> = [];
+  
+  showPassword = false;
+  isLoading = false; // Controls spinner state
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 
   login(): void {
+    if (this.isLoading) return;
+    
     this.errorMessage = [];
-    authenticate(this.http, this.config.rootUrl, { body: this.authRequest}).subscribe({
+    this.isLoading = true;
+
+    authenticate(this.http, this.config.rootUrl, { body: this.authRequest }).subscribe({
       next: (res) => {
-        if(res.body?.token){
+        this.isLoading = false;
+        if (res.body?.token) {
           this.tokenService.token = res.body.token;
           this.router.navigate(['books']);
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.log(">>>>> err : ", err);
+        this.isLoading = false;
         this.errorMessage = handleApiError(err);
         this.cdr.detectChanges();
-
       }
-    })
+    });
   }
 
   register(): void {
