@@ -1,0 +1,30 @@
+.register-card {
+  max-width: 960px;
+  width: 100%;
+
+  /* Dark gradient overlay + Blurred background image */
+  .left-banner {
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.85) 0%, rgba(10, 88, 202, 0.92) 100%),
+                url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1000&auto=format&fit=crop&blur=10') center/cover no-repeat;
+    min-height: 560px;
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .backdrop-blur {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+  }
+
+  .input-group-text,
+  .input-group .form-control {
+    border-color: #dee2e6;
+  }
+}

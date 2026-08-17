@@ -8,7 +8,6 @@ import { register } from '../../../../services/functions';
 import { ApiConfiguration } from '../../../../services/api-configuration';
 import { handleApiError } from '../../../../core/utils/error-handler.utils';
 
-
 @Component({
   selector: 'app-register',
   imports: [CommonModule, FormsModule],
@@ -24,13 +23,26 @@ export class Register {
   registerRequest: RegistrationRequest = { firstname: '', lastname: '', email: '', password: '' };
   errorMsg: Array<string> = [];
 
+  showPassword = false;
+  isLoading = false; // State for loading spinner
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   onRegister(): void {
+    if (this.isLoading) return;
+
     this.errorMsg = [];
+    this.isLoading = true;
+
     register(this.http, this.config.rootUrl, { body: this.registerRequest }).subscribe({
       next: () => {
+        this.isLoading = false;
         this.router.navigate(['activate-account']);
       },
       error: (err: HttpErrorResponse) => {
+        this.isLoading = false;
         this.errorMsg = handleApiError(err);
         this.cdr.detectChanges();
       }
